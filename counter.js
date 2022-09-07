@@ -1,7 +1,12 @@
 class Counter {
     constructor(initialValue = 1) {
         this.value = initialValue
-        this._initialValue = initialValue
+        Object.defineProperty(this, '_startValue', { // create readonly field
+            value: initialValue,
+            writable: false,
+            enumerable: false,
+            configurable: false,
+        })
     }
     increment (value = 1) {
         this.value += Math.ceil(value)
@@ -10,24 +15,26 @@ class Counter {
         this.value -= Math.ceil(value)
     }
     setInitial() {
-        this.value === this._initialValue
+        this.value = this._startValue
     }
-
     setNoun() {
         this.value = 0
     }
     setCustom(value) {
-        if(!value || Number.isNaN(value)){
-            return
-        } else {
-            this.value = Math.ceil(value)
-        }
+        if(!value || Number.isNaN(value)) return
+        else this.value = Math.ceil(value)
     }
 }
 
-const tester = new Counter()
-
-console.log(tester)
+// пробуем поменять startValue
+const title = new Counter(85)
+console.log(title.value)
+title.setCustom(66)
+console.log(title.value)
+title._startValue = 13
+title.setInitial()
+console.log(title.value)
+console.log("=====================================")
 
 for (
     const loopWacher = new Counter();
@@ -39,3 +46,4 @@ for (
     if( temp > 10000) loopWacher.setCustom(13.81575)
     console.log(temp)
 }
+
