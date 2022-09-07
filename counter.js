@@ -22,7 +22,7 @@ class Counter {
     }
     setCustom(value) {
         if(!value || Number.isNaN(value)) return
-        else this.value = Math.ceil(value)
+        this.value = Math.ceil(value)
     }
 }
 
